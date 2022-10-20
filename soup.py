@@ -5,7 +5,7 @@ import requests
 import json
 import csv
 
-
+# Код запроса
 
 url = 'https://health-diet.ru/table_calorie/?utm_source=leftMenu&utm_medium=table_calorie'
 headers = {
@@ -16,8 +16,12 @@ headers = {
 # req = requests.get(url, headers=headers)
 # src = req.text
 
+# Сохраняем страницу локально
+
 # with open('index.html', 'w') as file:
 #     file.write(src)
+
+# Читаем наш сохраненный файл и сохраняем его в переменную, далее вытаскиваем нужные ссылки и сохраняем в json формате
 
 # with open('index.html') as file:
 #     src = file.read()
