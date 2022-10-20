@@ -1,6 +1,6 @@
 from random import random
 from time import sleep
-from turtle import title
+
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -32,7 +32,19 @@ with open('index.html') as file:
     src = file.read()
 
 soup = BeautifulSoup(src, 'lxml')
-title = soup.find_all(class_='mzr-tc-group-item-href')
+title = soup.find(class_='article-home-wrapper').find('h1').text
+sections = soup.find(class_='entry-content').find_all('section')
+#print(sections[0].find('h2').text)
+for p in sections[0].find_all('p'):
+    print(p.text)
+
+
+
+
+   
+
+
+
 
 # all_categories_dict = {}
 # for item in all_products_hrefs:
