@@ -1,5 +1,4 @@
-from random import random
-from time import sleep
+
 
 from bs4 import BeautifulSoup
 import requests
@@ -32,16 +31,26 @@ with open('index.html') as file:
     src = file.read()
 
 soup = BeautifulSoup(src, 'lxml')
-title = soup.find(class_='article-home-wrapper').find('h1').text
-sections = soup.find(class_='entry-content').find_all('section')
-#print(sections[0].find('h2').text)
-for p in sections[0].find_all('p'):
-    print(p.text)
+project_data = soup.find("div", class_='entry-content')
+
+introduction = project_data.find('p').text[:30]
+
+sections = project_data.find_all('section',)
+
+for section in sections:
+    h2 = section.find('h2').text
+    p = section.find('p').text
+    a = [ul.text for ul in section.find_all('li')]
+    print(h2)
+    print(p)
+    print(a)
 
 
 
 
-   
+
+
+
 
 
 
