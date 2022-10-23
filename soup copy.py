@@ -1,5 +1,7 @@
-
-
+import pprint
+from random import random
+from time import sleep
+from turtle import title
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -22,32 +24,74 @@ src = req.text
 
 # Сохраняем страницу локально
 
-# with open('index.html', 'w') as file:
+# with open('data/index.html', 'w') as file:
 #     file.write(src)
 
 # Читаем наш сохраненный файл и сохраняем его в переменную, далее вытаскиваем нужные ссылки и сохраняем в json формате
 
-with open('index.html') as file:
+with open('data/index.html') as file:
     src = file.read()
 
+
 soup = BeautifulSoup(src, 'lxml')
-project_data = soup.find("div", class_='entry-content')
+post_data = soup.find(class_='post-body')
+sections = post_data.find_all('section')
 
-introduction = project_data.find('p').text[:30]
+dict = []
+count = 0
+id = {'p0', 'p1', 'p2'}
+for item in id:
+    
 
-sections = project_data.find_all('section',)
+    section_0 = soup.find('section', {'id': {item}})
 
-for section in sections:
-    h2 = section.find('h2').text
-    p = section.find('p').text
-    a = [ul.text for ul in section.find_all('li')]
-    print(h2)
-    print(p)
-    print(a)
+    h2 = section_0.find('h2').text
+    for p, li in section_0.find_all('p'), section_0.find_all('li'):
+        p, li
+
+        dict.append(
+            {
+                'h2': h2,
+                'p': p.text,
+                'li': li
+            }
+        )
+
+print(dict)
 
 
 
 
+
+# product_info = []
+# for section in sections:
+#     h2 = section.find('h2').text
+#     p = section.find_all('p')
+#     for pp in p:
+#         s = pp.text
+#         product_info.append(s)
+#     ul = section.find_all('li')
+#     for ulul in ul:
+#         v = ulul.text
+#         product_info.append(v)
+#     product_info.append(h2)
+
+    # print(product_info)
+    # product_info.append(
+    #     {
+    #         'title': h2,
+    #         'title_2': p
+
+    #     }
+    # )
+
+    # with open(f"data/1.csv", "w", encoding="utf-8") as file:
+    #     writer = csv.writer(file)
+    #     writer.writerow(product_info)
+ 
+
+    # with open(f"data/1.json", "a", encoding="utf -8") as file:
+    #     json.dump(product_info, file, indent=4, ensure_ascii=False)
 
 
 
