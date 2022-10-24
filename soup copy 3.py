@@ -37,9 +37,10 @@ try:
     post_body = soup.find('div', class_='entry-content')
     post_description = post_body.find('p').text
     post_section = post_body.find('section')
-    item = [item.text for item in post_body.find_all('p')]
-    if item is not None:
-        print(item)
+    section = [section for section in post_body.find_all('section')]
+
+    print(section)
+
 
 
 
