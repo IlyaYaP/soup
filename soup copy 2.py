@@ -1,4 +1,4 @@
-import pprint
+from operator import index
 from random import random
 from time import sleep
 from turtle import title
@@ -24,76 +24,53 @@ src = req.text
 
 # Сохраняем страницу локально
 
-# with open('data/index.html', 'w') as file:
+# with open('index.html', 'w') as file:
 #     file.write(src)
 
 # Читаем наш сохраненный файл и сохраняем его в переменную, далее вытаскиваем нужные ссылки и сохраняем в json формате
 
-with open('data/index.html') as file:
+with open('index.html') as file:
     src = file.read()
 
-
 soup = BeautifulSoup(src, 'lxml')
-post_data = soup.find(class_='post-body')
-sections = post_data.find_all('section')
+title = soup.find_all(class_='mzr-tc-group-item-href')
 
 dict = []
 count = 0
-id = {'p0',}
-for item in id:
-    
+id = {'p0', 'p1', 'p2',}
+try:
+    for item in id:
+        
 
-    section_0 = soup.find('section', {'id': {item}})
+        section_0 = soup.find('section', {'id': {item}})
+        h2 = section_0.find('h2').text
+        p = section_0.find_all('p')
+        alt = section_0.find('figure').find('img').get('alt')
+        src = 'https://neiros.ru/blog/business/kto-takoy-kontragent-i-chem-otlichaetsya-ot-klienta' + section_0.find('figure').find('img').get('src')
+        ul = section_0.find('ul').text
 
-    h2 = section_0.find('h2').text
 
-    for p, li in zip(section_0.find_all('p'), section_0.find_all('li')):
-        print(p.text, li.text)
+
 
         dict.append(
-            {
-                'h2': h2,
-                'p': p,
-                'li': li
-            }
+        {
+            'h2': h2,
+            'p1': p[1].text,
+            'p2': p[2].text,
+
+            'alt': alt,
+            'src': src,
+            'p4': p[4].text,
+            'p5': p[5].text,
+            'ul': ul.strip().split('\n')
+        }
         )
-
-print(dict)
-
-
+except IndexError as error_msg:
+    print(error_msg)
 
 
-
-# product_info = []
-# for section in sections:
-#     h2 = section.find('h2').text
-#     p = section.find_all('p')
-#     for pp in p:
-#         s = pp.text
-#         product_info.append(s)
-#     ul = section.find_all('li')
-#     for ulul in ul:
-#         v = ulul.text
-#         product_info.append(v)
-#     product_info.append(h2)
-
-    # print(product_info)
-    # product_info.append(
-    #     {
-    #         'title': h2,
-    #         'title_2': p
-
-    #     }
-    # )
-
-    # with open(f"data/1.csv", "w", encoding="utf-8") as file:
-    #     writer = csv.writer(file)
-    #     writer.writerow(product_info)
- 
-
-    # with open(f"data/1.json", "a", encoding="utf -8") as file:
-    #     json.dump(product_info, file, indent=4, ensure_ascii=False)
-
+with open('dict.json', 'w') as file:
+    json.dump(dict, file, indent=4, ensure_ascii=False)
 
 
 
