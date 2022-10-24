@@ -1,7 +1,4 @@
-from operator import index
-from random import random
-from time import sleep
-from turtle import title
+
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -34,10 +31,10 @@ with open('index.html') as file:
 
 soup = BeautifulSoup(src, 'lxml')
 title = soup.find_all(class_='mzr-tc-group-item-href')
-
+dict_2 = []
 dict = []
 count = 0
-id = {'p0', 'p1', 'p2', 'p3', 'p4', 'p5'}
+id = {'p0',}
 try:
     for item in id:
         
@@ -49,20 +46,25 @@ try:
         src = 'https://neiros.ru/blog/business/kto-takoy-kontragent-i-chem-otlichaetsya-ot-klienta' + section_0.find('figure').find('img').get('src')
         ul = section_0.find_all('li')
 
-
-
+        # dict.append(
+        # {
+        #     'h2': h2,
+        #     'p_1': p[1].text,
+        #     'p': section_0.find('div', class_='attention-box bg-light-grey').find('p').text,
+        #     'alt': alt,
+        #     'src': src,
+        #     'p_2': p[4].text,
+        # #    # 'ul': ul[-1].strip().split('\n')
+        #     'p_3': p[5].text,
+        #     'ul': ul[-1].text
+        # }
+        # )
 
         dict.append(
         {
             'h2': h2,
+            'pp': dict_2
 
-
-
-            'alt': alt,
-            'src': src,
-
-           # 'ul': ul[-1].strip().split('\n')
-            'ul': ul[-1].text
         }
         )
 except IndexError as error_msg:

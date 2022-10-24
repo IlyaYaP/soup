@@ -1,38 +1,5 @@
 [
     {
         "h2": "Кто такой контрагент",
-        "alt": "Кто такой контрагент",
-        "src": "https://neiros.ru/blog/business/kto-takoy-kontragent-i-chem-otlichaetsya-ot-klienta/img/counterparty/kto-takoy-kontragent.jpg",
-        "ul": "Влечет за собой “Риск контрагента”. Это риск того, что какая-то сторона сделки не сможет выполнить свою часть договоренностей. Однако во многих финансовых транзакциях контрагент неизвестен, и риск контрагента снижается за счет использования клиринговых фирм."
-    },
-    {
-        "h2": "Проверка контрагента",
-        "alt": "Способы проверки контрагента",
-        "src": "https://neiros.ru/blog/business/kto-takoy-kontragent-i-chem-otlichaetsya-ot-klienta/img/counterparty/sposoby-proverki-kontragenta.png",
-        "ul": "Ресурсы для проверки паспорта гражданина РФ."
-    },
-    {
-        "h2": "Виды и типы контрагентов",
-        "alt": "Виды контрагентов",
-        "src": "https://neiros.ru/blog/business/kto-takoy-kontragent-i-chem-otlichaetsya-ot-klienta/img/counterparty/vidy-kontragentov.png",
-        "ul": "Многосторонние."
-    },
-    {
-        "h2": "Заключение договора с контрагентом",
-        "alt": "Этапы заключения договора",
-        "src": "https://neiros.ru/blog/business/kto-takoy-kontragent-i-chem-otlichaetsya-ot-klienta/img/counterparty/etapy-zaklyucheniya-dogovora.png",
-        "ul": "Подписание контракта. Если стороны приходят к общему решению, то они подписывают договор и становятся друг для друга контрагентами."
-    },
-    {
-        "h2": "Какие формы договоров бывают",
-        "alt": "Формы договоров",
-        "src": "https://neiros.ru/blog/business/kto-takoy-kontragent-i-chem-otlichaetsya-ot-klienta/img/counterparty/formy-dogovorov.png",
-        "ul": "Реальный договор предполагает, помимо соглашения сторон, передачу самого его предмета."
-    },
-    {
-        "h2": "Принципы сотрудничества между контрагентами",
-        "alt": "Принципы сотрудничества",
-        "src": "https://neiros.ru/blog/business/kto-takoy-kontragent-i-chem-otlichaetsya-ot-klienta/img/counterparty/printsipy-sotrudnichestva.png",
-        "ul": "Стороны закрывают свои финансовые обязательства. По итогу у одной из сторон образуется задолженность перед другой стороной, которая закрывается указанным в договоре способом (предоплата, оплата по факту и т.д.)."
-    }
-]
+        "pp": [
+            
