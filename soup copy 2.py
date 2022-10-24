@@ -37,7 +37,7 @@ title = soup.find_all(class_='mzr-tc-group-item-href')
 
 dict = []
 count = 0
-id = {'p0', 'p1', 'p2',}
+id = {'p0', 'p1', 'p2', 'p3', 'p4', 'p5'}
 try:
     for item in id:
         
@@ -47,7 +47,7 @@ try:
         p = section_0.find_all('p')
         alt = section_0.find('figure').find('img').get('alt')
         src = 'https://neiros.ru/blog/business/kto-takoy-kontragent-i-chem-otlichaetsya-ot-klienta' + section_0.find('figure').find('img').get('src')
-        ul = section_0.find('ul').text
+        ul = section_0.find_all('li')
 
 
 
@@ -55,14 +55,14 @@ try:
         dict.append(
         {
             'h2': h2,
-            'p1': p[1].text,
-            'p2': p[2].text,
+
+
 
             'alt': alt,
             'src': src,
-            'p4': p[4].text,
-            'p5': p[5].text,
-            'ul': ul.strip().split('\n')
+
+           # 'ul': ul[-1].strip().split('\n')
+            'ul': ul[-1].text
         }
         )
 except IndexError as error_msg:
