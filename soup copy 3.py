@@ -1,8 +1,10 @@
 
+from email.policy import default
 from bs4 import BeautifulSoup
 import requests
 import json
 import csv
+
 from urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
@@ -32,19 +34,42 @@ with open('index.html') as file:
 soup = BeautifulSoup(src, 'lxml')
 
 try:
+    list_section =[]
+    list_item =[]
 
     name_post = soup.find('div', class_='article-home-wrapper').find('h1').text
     post_body = soup.find('div', class_='entry-content')
     post_description = post_body.find('p').text
-    post_section = post_body.find('section')
-    section = [section for section in post_body.find_all('section')]
+    # sections = [sections.text for sections in post_body.find_all('section')] 
 
-    print(section)
+    sections = soup.find('a', class_='links-toggle links-blue').find_next()
+    section = [section.text for section in sections]
+    # item = [item.text.strip() for item in sections.find_all('p',)]
+    # item_ul = [item_ul.text for item_ul in sections.find_all('ul')]
+    list_section.append({
+            'name_post': name_post,
+            'post_description': post_description,
+            'section': section
+            })
+
+    with open('list_section.json', 'w') as file:
+        json.dump(list_section, file, indent=4, ensure_ascii=False)
 
 
 
+    # list_section.append({
+    #         'body_post': sections.find('p')
+    #     })
 
 
+
+    # with open('list_section.json', 'a') as file:
+    #     json.dump(list_section, file, indent=4, ensure_ascii=False)
+
+
+    with open(f"data/1.csv", "w", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(list_section)
 
 except Exception as ex:
     print(ex)

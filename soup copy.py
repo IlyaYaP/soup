@@ -39,7 +39,7 @@ sections = post_data.find_all('section')
 
 dict = []
 count = 0
-id = {'p0',}
+id = {'p0', 'p1', 'p2'}
 for item in id:
     
 
