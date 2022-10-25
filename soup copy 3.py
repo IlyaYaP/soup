@@ -34,42 +34,30 @@ with open('index.html') as file:
 soup = BeautifulSoup(src, 'lxml')
 
 try:
-    list_section =[]
-    list_item =[]
 
+    list_post = []
     name_post = soup.find('div', class_='article-home-wrapper').find('h1').text
     post_body = soup.find('div', class_='entry-content')
     post_description = post_body.find('p').text
-    # sections = [sections.text for sections in post_body.find_all('section')] 
-
-    sections = soup.find('a', class_='links-toggle links-blue').find_next()
-    section = [section.text for section in sections]
-    # item = [item.text.strip() for item in sections.find_all('p',)]
-    # item_ul = [item_ul.text for item_ul in sections.find_all('ul')]
-    list_section.append({
-            'name_post': name_post,
-            'post_description': post_description,
-            'section': section
-            })
-
-    with open('list_section.json', 'w') as file:
-        json.dump(list_section, file, indent=4, ensure_ascii=False)
+    post_sections =  soup.find('div', class_='entry-content')
+    a = soup.find('div', class_='entry-content').find_all('section')
 
 
 
-    # list_section.append({
-    #         'body_post': sections.find('p')
-    #     })
+    post_section = [post_section.text.strip().splitlines() for post_section in post_sections.find_all('section')[0] if post_section.text.strip()]
+
+    print(post_section)
+
+    list_post.append({
+        'post': post_section
+    })
+
+ 
+
+    with open('list_post.json', 'w') as file:
+        json.dump(list_post, file, indent=4, ensure_ascii=False)
 
 
-
-    # with open('list_section.json', 'a') as file:
-    #     json.dump(list_section, file, indent=4, ensure_ascii=False)
-
-
-    with open(f"data/1.csv", "w", encoding="utf-8") as file:
-        writer = csv.writer(file)
-        writer.writerow(list_section)
 
 except Exception as ex:
     print(ex)
