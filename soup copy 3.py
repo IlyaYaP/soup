@@ -36,26 +36,30 @@ soup = BeautifulSoup(src, 'lxml')
 try:
 
     list_post = []
+    dict_post = {}
     name_post = soup.find('div', class_='article-home-wrapper').find('h1').text
     post_body = soup.find('div', class_='entry-content')
     post_description = post_body.find('p').text
     post_sections =  soup.find('div', class_='entry-content')
-    a = soup.find('div', class_='entry-content').find_all('section')
 
 
 
-    post_section = [post_section.text.strip().splitlines() for post_section in post_sections.find_all('section')[0] if post_section.text.strip()]
 
-    print(post_section)
+    post_section = [post_section.text.strip().replace('\n', ' ') for post_section in post_sections.find_all('section')]
 
-    list_post.append({
-        'post': post_section
-    })
+
+    
+
 
  
 
     with open('list_post.json', 'w') as file:
-        json.dump(list_post, file, indent=4, ensure_ascii=False)
+        json.dump(list_post, file, indent=0, ensure_ascii=False)
+    
+    with open(f"1.csv", "w", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(list_post)
+
 
 
 
