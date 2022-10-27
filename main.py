@@ -1,6 +1,10 @@
+import json
+from urllib import response
 import requests
 from bs4 import BeautifulSoup
 from urllib3.exceptions import InsecureRequestWarning
+import time
+from random import randrange
 
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
@@ -19,7 +23,7 @@ def get_articles_urls(url):
     soup = BeautifulSoup(response.text, 'lxml')
     pagination_count = int(soup.find('ul', class_ = 'pagination').find_all('a', class_='page-link')[-2].text)
 
-
+    article_url_list = []
     with requests.Session() as session:
         for page in range(1, pagination_count + 1):
             print(page)
@@ -33,7 +37,42 @@ def get_articles_urls(url):
 
             for au in articles_url:
                 art_url = 'https://neiros.ru' + au.get('href')
-                print(art_url)
+                article_url_list.append(art_url)
+            time.sleep(randrange(2, 5))
+            print(f'Обработал {page}/{pagination_count}')
+    
+        with open('articles_urls.txt', 'w') as file:
+            for url in article_url_list:
+                file.write(f'{url}\n')
+
+        return 'Работа по сборy ссылок выполнеан'
+
+def get_data(file_path):
+    with open(file_path) as file:
+        urls_list = [line.strip() for line in file.readlines()]
+
+    with requests.Session() as session:
+        result_data = []
+
+        for url in urls_list[:3]:
+            response = session.get(url=url, headers=headers, verify=False)
+            soup = BeautifulSoup(response.text, 'lxml')
+            article_title = soup.find('div', class_='article-home-wrapper').find('h1', class_='aticle-h1').text
+            article_author = f"дата + {soup.find('div', class_='author-article').find('a').text}"
+            article_pub_date = soup.find('div', class_='article-home-box').find('p').text
+            post_section = [post_section.text.strip().replace('\n', ' ') for post_section in soup.find('div', class_='entry-content').find_all('section')]
+
+            result_data.append({
+                'article_title': article_title,
+                'article_author': article_author,
+                'article_pub_date': article_pub_date,
+                'post_section': post_section
+
+            })
+    
+    with open(f'data.json', 'w', encoding="utf-8") as file:
+        json.dump(result_data, file, indent=4, ensure_ascii=False)
+
 
             
 
@@ -48,7 +87,8 @@ def get_articles_urls(url):
 
 
 def main():
-    get_articles_urls(url='https://neiros.ru/blog/analytics/')
+    # print(get_articles_urls(url='https://neiros.ru/blog/analytics/'))
+    get_data('articles_urls.txt')
 
 
 
