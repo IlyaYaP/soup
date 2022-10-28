@@ -54,19 +54,24 @@ def get_data(file_path):
     with requests.Session() as session:
         result_data = []
 
-        for url in urls_list[:3]:
+        for url in urls_list[:1]:
             response = session.get(url=url, headers=headers, verify=False)
             soup = BeautifulSoup(response.text, 'lxml')
             article_title = soup.find('div', class_='article-home-wrapper').find('h1', class_='aticle-h1').text
-            article_author = f"дата + {soup.find('div', class_='author-article').find('a').text}"
+            article_author = soup.find('div', class_='author-article').find('a').text
             article_pub_date = soup.find('div', class_='article-home-box').find('p').text
             post_section = [post_section.text.strip().replace('\n', ' ') for post_section in soup.find('div', class_='entry-content').find_all('section')]
+            article_img =  soup.find('div', class_='entry-content').find_all('img')
+            article_img_tags = ['asdf' + img['src'] for img in article_img]
+            print(article_img_tags)
 
             result_data.append({
-                'article_title': article_title,
-                'article_author': article_author,
-                'article_pub_date': article_pub_date,
-                'post_section': post_section
+                'Название статьи': article_title,
+                'Автор статьи': article_author,
+                'Дата публикации': article_pub_date,
+                'Пост': post_section,
+                'img': article_img_tags
+
 
             })
     
