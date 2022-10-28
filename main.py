@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from urllib3.exceptions import InsecureRequestWarning
 import time
 from random import randrange
+import re
 
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
@@ -62,8 +63,20 @@ def get_data(file_path):
             article_pub_date = soup.find('div', class_='article-home-box').find('p').text
             post_section = [post_section.text.strip().replace('\n', ' ') for post_section in soup.find('div', class_='entry-content').find_all('section')]
             article_img =  soup.find('div', class_='entry-content').find_all('img')
-            article_img_tags = ['asdf' + img['src'] for img in article_img]
-            print(article_img_tags)
+            article_img_tags = ['https://neiros.ru' + img['src'] for img in article_img]
+            
+
+
+            for url in article_img_tags:
+                filename = re.search(r'/([\w_-]+[.](jpg|gif|png))$', url)
+                if not filename:
+                    print("Regex didn't match with the url: {}".format(url))
+                    continue
+                with open(f'data_img/{filename.group(1)}', 'wb') as f:
+                    if 'http' not in url: 
+                        url = '{}{}'.format(url)
+                    response = session.get(url=url, headers=headers, verify=False)
+                    f.write(response.content)
 
             result_data.append({
                 'Название статьи': article_title,
@@ -71,8 +84,6 @@ def get_data(file_path):
                 'Дата публикации': article_pub_date,
                 'Пост': post_section,
                 'img': article_img_tags
-
-
             })
     
     with open(f'data.json', 'w', encoding="utf-8") as file:
