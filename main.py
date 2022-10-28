@@ -55,7 +55,7 @@ def get_data(file_path):
     with requests.Session() as session:
         result_data = []
 
-        for url in urls_list[:1]:
+        for url in urls_list[:3]:
             response = session.get(url=url, headers=headers, verify=False)
             soup = BeautifulSoup(response.text, 'lxml')
             article_title = soup.find('div', class_='article-home-wrapper').find('h1', class_='aticle-h1').text
