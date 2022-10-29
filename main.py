@@ -6,6 +6,7 @@ from urllib3.exceptions import InsecureRequestWarning
 import time
 from random import randrange
 import re
+import os
 
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
@@ -16,6 +17,7 @@ headers = {
 }
 
 
+# Сбор url в файл articles_url.txt
 
 def get_articles_urls(url):
     with requests.Session() as session:
@@ -55,7 +57,7 @@ def get_data(file_path):
     with requests.Session() as session:
         result_data = []
 
-        for url in urls_list[:3]:
+        for url in urls_list[:2]:
             response = session.get(url=url, headers=headers, verify=False)
             soup = BeautifulSoup(response.text, 'lxml')
             article_title = soup.find('div', class_='article-home-wrapper').find('h1', class_='aticle-h1').text
@@ -66,13 +68,17 @@ def get_data(file_path):
             article_img_tags = ['https://neiros.ru' + img['src'] for img in article_img]
             
 
+# Загрузка медиа в папку data_img/{article_title}
 
             for url in article_img_tags:
+                newpath = fr'C:\Users\Оля\Dev\soup\data_img\{article_title}' 
+                if not os.path.exists(newpath):
+                    os.makedirs(newpath)
                 filename = re.search(r'/([\w_-]+[.](jpg|gif|png))$', url)
                 if not filename:
                     print("Regex didn't match with the url: {}".format(url))
                     continue
-                with open(f'data_img/{filename.group(1)}', 'wb') as f:
+                with open(f'data_img/{article_title}/{filename.group(1)}', 'wb') as f:
                     if 'http' not in url: 
                         url = '{}{}'.format(url)
                     response = session.get(url=url, headers=headers, verify=False)
@@ -90,22 +96,14 @@ def get_data(file_path):
         json.dump(result_data, file, indent=4, ensure_ascii=False)
 
 
-            
-
-
-
-
 
     # with open('data/index_2.html', 'w') as file:
     #     file.write(response.text)
 
 
-
-
 def main():
     # print(get_articles_urls(url='https://neiros.ru/blog/analytics/'))
     get_data('articles_urls.txt')
-
 
 
 if __name__ == '__main__':
