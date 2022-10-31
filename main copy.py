@@ -50,12 +50,14 @@ def get_articles_urls(url):
 
         return 'Работа по сборy ссылок выполнеан'
 
+
 def get_data(file_path):
     with open(file_path) as file:
         urls_list = [line.strip() for line in file.readlines()]
 
     with requests.Session() as session:
         result_data = []
+        
 
         for url in urls_list[:2]:
             response = session.get(url=url, headers=headers, verify=False)
@@ -63,39 +65,22 @@ def get_data(file_path):
 
             article_title = soup.find('div', class_='article-home-wrapper').find('h1', class_='aticle-h1').text
 
-            post_section = [post_section.find('h2') for post_section in soup.find('div', class_='entry-content').find_all('section')]
-            print(post_section[:len(post_section)])
+            post_h2 = [post_section.text for post_section in soup.find('div', class_='entry-content').find_all('h2')]
+            post_h3 = [post_section.text for post_section in soup.find('div', class_='entry-content').find_all('h3')]
+            print(post_h2)
+            print(post_h3)
 
-            article_img =  soup.find('div', class_='entry-content').find_all('img')
-            article_img_tags = ['https://neiros.ru' + img['src'] for img in article_img]
-            
 
-# Загрузка медиа в папку data_img/{article_title}
+            result_data.append({ 
+                    
+                        article_title: {post_h2[1]: 'qwe'}})
 
-            # for url in article_img_tags:
-            #     newpath = fr'C:\Users\Оля\Dev\soup\data_img\{article_title}' 
-            #     if not os.path.exists(newpath):
-            #         os.makedirs(newpath)
-            #     filename = re.search(r'/([\w_-]+[.](jpg|gif|png))$', url)
-            #     if not filename:
-            #         print("Regex didn't match with the url: {}".format(url))
-            #         continue
-            #     with open(f'data_img/{article_title}/{filename.group(1)}', 'wb') as f:
-            #         if 'http' not in url: 
-            #             url = '{}{}'.format(url)
-            #         response = session.get(url=url, headers=headers, verify=False)
-            #         f.write(response.content)
 
-            result_data.append({
-                'Название статьи': 
-                    {article_title: 
-                        {post_section: {}}
 
-                        },
-            })
+
     
     with open(f'data.json', 'w', encoding="utf-8") as file:
-        json.dump(result_data, file, indent=4, ensure_ascii=False)
+        json.dump(result_data, file, indent=6, ensure_ascii=False)
 
 
 
