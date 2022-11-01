@@ -1,3 +1,4 @@
+from asyncore import write
 import json
 from urllib import response
 import requests
@@ -7,6 +8,7 @@ import time
 from random import randrange
 import re
 import os
+import csv
 
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
@@ -51,36 +53,44 @@ def get_articles_urls(url):
         return 'Работа по сборy ссылок выполнеан'
 
 
+
 def get_data(file_path):
     with open(file_path) as file:
         urls_list = [line.strip() for line in file.readlines()]
 
     with requests.Session() as session:
-        result_data = []
         
 
-        for url in urls_list[:2]:
+        for url in urls_list[:1]:
             response = session.get(url=url, headers=headers, verify=False)
             soup = BeautifulSoup(response.text, 'lxml')
 
             article_title = soup.find('div', class_='article-home-wrapper').find('h1', class_='aticle-h1').text
+            
 
-            post_h2 = [post_section.text for post_section in soup.find('div', class_='entry-content').find_all('h2')]
-            post_h3 = [post_section.text for post_section in soup.find('div', class_='entry-content').find_all('h3')]
-            print(post_h2)
-            print(post_h3)
+            post_section = [post_section for post_section in soup.find('div', class_='entry-content').find_all('section')]
+
+            result_data = [article_title]
+            h2 = [h2.find('h2').text for h2 in post_section]
 
 
-            result_data.append({ 
-                    
-                        article_title: {post_h2[1]: 'qwe'}})
+            # h3 = [h3.text for h3 in soup.find('div', class_='entry-content').find_all('h3')]
+
+            
+            for h2_, h3_ in zip(h2, h3):
+                print(h3_)
+                
+                result_data.append({
+                    h2_:{h3_: '12'},
+
+                })
 
 
 
 
     
-    with open(f'data.json', 'w', encoding="utf-8") as file:
-        json.dump(result_data, file, indent=6, ensure_ascii=False)
+            with open(f'data.json', 'w', encoding="utf-8") as file:
+                json.dump(result_data, file, indent=6, ensure_ascii=False)
 
 
 
