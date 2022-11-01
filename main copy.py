@@ -70,20 +70,25 @@ def get_data(file_path):
 
             post_section = [post_section for post_section in soup.find('div', class_='entry-content').find_all('section')]
 
+
+
+
             result_data = [article_title]
-            h2 = [h2.find('h2').text for h2 in post_section]
-
-
-            # h3 = [h3.text for h3 in soup.find('div', class_='entry-content').find_all('h3')]
+            h2 = [h2.find_all(['h2', 'h3']) for h2 in post_section]
+            for i in h2:
+                result_data.append(i)
+            print(result_data)
 
             
-            for h2_, h3_ in zip(h2, h3):
-                print(h3_)
-                
-                result_data.append({
-                    h2_:{h3_: '12'},
 
-                })
+
+            h3 = [h3.text for h3 in soup.find('div', class_='entry-content').find_all('h3')]
+
+
+
+            
+ 
+       
 
 
 
