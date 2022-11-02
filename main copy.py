@@ -9,7 +9,7 @@ from random import randrange
 import re
 import os
 import csv
-import numpy as np
+
 
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
@@ -70,15 +70,18 @@ def get_data(file_path):
 
             
 
-            h2 = [post_section.find_all({'h2': ['h3']}) for post_section in soup.find('div', class_='entry-content').find_all('section')]
+            h2 = [post_section.find_all('h2') or post_section.find_all('h3') for post_section in soup.find('div', class_='entry-content').find_all('section')]
             print(h2)
 
-            for item in h2:
-                print(item)
+
+            result_data = [article_title]
+
+            
+                    
 
 
 
-            # result_data = [article_title]
+            
 
 
 
@@ -95,8 +98,8 @@ def get_data(file_path):
             # h3 = [h3.text for h3 in soup.find('div', class_='entry-content').find_all('h3')]
 
     
-            # with open(f'data.json', 'w', encoding="utf-8") as file:
-            #     json.dump(result_data, file, indent=6, ensure_ascii=False)
+            with open(f'data.json', 'w', encoding="utf-8") as file:
+                json.dump(result_data, file, indent=6, ensure_ascii=False)
 
 
 
