@@ -70,8 +70,14 @@ def get_data(file_path):
 
             
 
-            h2 = [post_section.find_all('h2') or post_section.find_all('h3') for post_section in soup.find('div', class_='entry-content').find_all('section')]
-            print(h2)
+            h2 = [post_section.find_all(['h2', 'h3']) for post_section in soup.find('div', class_='entry-content').find_all('section')]
+            for i in h2:
+                if len(i)<=1:
+                    print(i)
+
+
+                else:
+                    print(i)
 
 
             result_data = [article_title]
