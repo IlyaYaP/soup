@@ -9,6 +9,7 @@ from random import randrange
 import re
 import os
 import csv
+import numpy as np
 
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
@@ -64,38 +65,38 @@ def get_data(file_path):
         for url in urls_list[:1]:
             response = session.get(url=url, headers=headers, verify=False)
             soup = BeautifulSoup(response.text, 'lxml')
-
+            
             article_title = soup.find('div', class_='article-home-wrapper').find('h1', class_='aticle-h1').text
-            
-
-            post_section = [post_section for post_section in soup.find('div', class_='entry-content').find_all('section')]
-
-
-
-
-            result_data = [article_title]
-            h2 = [h2.find_all(['h2', 'h3']) for h2 in post_section]
-            for i in h2:
-                result_data.append(i)
-            print(result_data)
 
             
 
+            h2 = [post_section.find_all({'h2': ['h3']}) for post_section in soup.find('div', class_='entry-content').find_all('section')]
+            print(h2)
 
-            h3 = [h3.text for h3 in soup.find('div', class_='entry-content').find_all('h3')]
-
-
-
-            
- 
-       
+            for item in h2:
+                print(item)
 
 
 
+            # result_data = [article_title]
+
+
+
+            # for i in h2:
+
+            #     h2_ = [h2.text.strip().replace('\n', ' ') for h2 in i]
+
+
+
+
+            #     result_data.append(h2_)
+
+
+            # h3 = [h3.text for h3 in soup.find('div', class_='entry-content').find_all('h3')]
 
     
-            with open(f'data.json', 'w', encoding="utf-8") as file:
-                json.dump(result_data, file, indent=6, ensure_ascii=False)
+            # with open(f'data.json', 'w', encoding="utf-8") as file:
+            #     json.dump(result_data, file, indent=6, ensure_ascii=False)
 
 
 
