@@ -76,15 +76,8 @@ def get_data(file_path):
             # h3_ = soup.find('div', class_='entry-content').select('h2,  h3')
             result_data= []
 
-            section_id0 = soup.find('section', {'id': 'p4'})
-            h2 = section_id0.find('h2')
-            h3 = section_id0.find_all_next('h3')
-            ul = h3.find_('ul')
-            print(h3)
-            result_data.append({
-                article_title: {h2.text: {h3.text: ul.text.replace('\n', ' ')}}
-            })
-
+            section_id0 = soup.find('div', class_='keep-post__body collapse show')
+            print(section_id0)
 
 
 
