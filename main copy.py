@@ -70,17 +70,35 @@ def get_data(file_path):
 
             
 
-            h2 = [post_section.find_all(['h2', 'h3']) for post_section in soup.find('div', class_='entry-content').find_all('section')]
-            for i in h2:
-                if len(i)<=1:
-                    i 
+            # h3 = [post_section.select('h2,  h3') for post_section in soup.find('div', class_='entry-content').find_all('section')]
+            # result_data = [] 
+            # h2_ = soup.find('div', class_='entry-content').select('h2')
+            # h3_ = soup.find('div', class_='entry-content').select('h2,  h3')
+            result_data= []
+
+            section_id0 = soup.find('section', {'id': 'p4'})
+            h2 = section_id0.find('h2')
+            h3 = section_id0.find_all_next('h3')
+            ul = h3.find_('ul')
+            print(h3)
+            result_data.append({
+                article_title: {h2.text: {h3.text: ul.text.replace('\n', ' ')}}
+            })
 
 
-                else:
-                    i
 
 
-            result_data = [article_title]
+
+
+
+
+
+            
+
+
+                
+
+
 
             
                     
@@ -105,7 +123,7 @@ def get_data(file_path):
 
     
             with open(f'data.json', 'w', encoding="utf-8") as file:
-                json.dump(result_data, file, indent=6, ensure_ascii=False)
+                json.dump(result_data, file, indent=4, ensure_ascii=False)
 
 
 
