@@ -77,7 +77,10 @@ def get_data(file_path):
             result_data= []
 
             section_id0 = soup.find('div', class_='keep-post__body collapse show')
-            print(section_id0)
+            li = section_id0.find_all('li')
+            li_ul = section_id0.select('li, ul')
+            for i in li_ul:
+                result_data.append(i)
 
 
 
