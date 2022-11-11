@@ -81,6 +81,9 @@ def get_data(file_path):
             li_ul = section_id0.select('li, ul')
             for i in li_ul:
                 result_data.append(i)
+            
+            print(result_data)
+            
 
 
 
