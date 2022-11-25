@@ -79,13 +79,14 @@ def get_data(file_path):
                 
                 h3 = post_section.find_all('h3')
                 h3 = [h3.text.strip().replace('\n', ' ') for h3 in h3]
-                print(h3)
+                h3 = ', '.join(h3)
+
 
                 li = post_section.find_all('li')
                 li = [li.text.strip().replace('\n', ' ') for li in li]
                 
 
-                result_data.append({h2: h3})
+                result_data.append({h2: {h3: li}})
                 
 
 
