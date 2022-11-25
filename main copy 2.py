@@ -7,6 +7,7 @@ import time
 from random import randrange
 import re
 import os
+from itertools import chain
 
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
@@ -73,20 +74,15 @@ def get_data(file_path):
                 # 'img': article_img_tags
             })
             for post_section in soup.find('div', class_='entry-content').find_all('section'):
-                count += 1
-                
                 h2 = post_section.find('h2').text
-                
-                h3 = post_section.find_all('h3')
-                h3 = [h3.text.strip().replace('\n', ' ') for h3 in h3]
-                h3 = ', '.join(h3)
 
+                h3 = [h3.text.strip().replace('\n', ' ') for h3 in post_section.find_all('h3')]
 
-                li = post_section.find_all('li')
-                li = [li.text.strip().replace('\n', ' ') for li in li]
+                # li = post_section.find_all('li')
+                # li = [li.text.strip().replace('\n', ' ') for li in li]
                 
 
-                result_data.append({h2: {h3: li}})
+                result_data.append({h2: h3})
                 
 
 
@@ -111,7 +107,7 @@ def get_data(file_path):
             #         f.write(response.content)
 
     
-    with open(f'data.json', 'w', encoding="utf-8") as file:
+    with open(f'data_1.json', 'w', encoding="utf-8") as file:
         json.dump(result_data, file, indent=4, ensure_ascii=False)
 
 
