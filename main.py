@@ -27,28 +27,28 @@ def get_articles_urls(url):
     pagination_count = int(soup.find('ul', class_ = 'pagination').find_all('a', class_='page-link')[-2].text)
 
     article_url_list = []
-    with requests.Session() as session:
-        for page in range(1, pagination_count + 1):
-            print(page)
+    # with requests.Session() as session:
+    #     for page in range(1, pagination_count + 1):
+    #         print(page)
 
-            response = session.get(url=f'https://neiros.ru/blog/analytics/?page={page}', headers=headers, verify=False)
+    #         response = session.get(url=f'https://neiros.ru/blog/analytics/?page={page}', headers=headers, verify=False)
             
-            soup = BeautifulSoup(response.text, 'lxml')
-            articles_url = soup.find_all('a', class_='icon-right')
+    #         soup = BeautifulSoup(response.text, 'lxml')
+    #         articles_url = soup.find_all('a', class_='icon-right')
 
 
 
-            for au in articles_url:
-                art_url = 'https://neiros.ru' + au.get('href')
-                article_url_list.append(art_url)
-            time.sleep(randrange(2, 5))
-            print(f'Обработал {page}/{pagination_count}')
+    #         for au in articles_url:
+    #             art_url = 'https://neiros.ru' + au.get('href')
+    #             article_url_list.append(art_url)
+    #         time.sleep(randrange(2, 5))
+    #         print(f'Обработал {page}/{pagination_count}')
     
-        with open('articles_urls.txt', 'w') as file:
-            for url in article_url_list:
-                file.write(f'{url}\n')
+    #     with open('articles_urls.txt', 'w') as file:
+    #         for url in article_url_list:
+    #             file.write(f'{url}\n')
 
-        return 'Работа по сборy ссылок выполнеан'
+    #     return 'Работа по сборy ссылок выполнеан'
 
 def get_data(file_path):
     with open(file_path) as file:
@@ -70,19 +70,19 @@ def get_data(file_path):
 
 # Загрузка медиа в папку data_img/{article_title}
 
-            for url in article_img_tags:
-                newpath = fr'C:\Users\Оля\Dev\soup\data_img\{article_title}' 
-                if not os.path.exists(newpath):
-                    os.makedirs(newpath)
-                filename = re.search(r'/([\w_-]+[.](jpg|gif|png))$', url)
-                if not filename:
-                    print("Regex didn't match with the url: {}".format(url))
-                    continue
-                with open(f'data_img/{article_title}/{filename.group(1)}', 'wb') as f:
-                    if 'http' not in url: 
-                        url = '{}{}'.format(url)
-                    response = session.get(url=url, headers=headers, verify=False)
-                    f.write(response.content)
+            # for url in article_img_tags:
+            #     newpath = fr'C:\Users\Оля\Dev\soup\data_img\{article_title}' 
+            #     if not os.path.exists(newpath):
+            #         os.makedirs(newpath)
+            #     filename = re.search(r'/([\w_-]+[.](jpg|gif|png))$', url)
+            #     if not filename:
+            #         print("Regex didn't match with the url: {}".format(url))
+            #         continue
+            #     with open(f'data_img/{article_title}/{filename.group(1)}', 'wb') as f:
+            #         if 'http' not in url: 
+            #             url = '{}{}'.format(url)
+            #         response = session.get(url=url, headers=headers, verify=False)
+            #         f.write(response.content)
 
             result_data.append({
                 'Название статьи': article_title,
