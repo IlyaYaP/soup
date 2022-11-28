@@ -82,9 +82,11 @@ def get_data(file_path):
                 li = post_section.find_all('li')
                 li = [li.text.strip().replace('\n', ' ') for li in li]
                 for lis in li:
+                    if h3 is not result_data:
+
                 
 
-                    result_data.append({h2: lis})
+                        result_data.append({h2: lis})
                 
 
 
