@@ -58,7 +58,7 @@ def get_data(file_path):
     with requests.Session() as session:
         result_data = []
 
-        for url in urls_list[:2]:
+        for url in urls_list[:1]:
             response = session.get(url=url, headers=headers, verify=False)
             soup = BeautifulSoup(response.text, 'lxml')
             article_title = soup.find('div', class_='article-home-wrapper').find('h1', class_='aticle-h1').text
@@ -78,11 +78,13 @@ def get_data(file_path):
 
                 h3 = [h3.text.strip().replace('\n', ' ') for h3 in post_section.find_all('h3')]
 
-                # li = post_section.find_all('li')
-                # li = [li.text.strip().replace('\n', ' ') for li in li]
+
+                li = post_section.find_all('li')
+                li = [li.text.strip().replace('\n', ' ') for li in li]
+                for lis in li:
                 
 
-                result_data.append({h2: h3})
+                    result_data.append({h2: lis})
                 
 
 
